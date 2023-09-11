@@ -1,155 +1,134 @@
-<p align="center">
-  <a href="https://www.medusa-commerce.com">
-    <img alt="Medusa" src="https://i.imgur.com/USubGVY.png" width="100" />
-  </a>
-</p>
-<h1 align="center">
-  Medusa Starter Default
-</h1>
-<p align="center">
-This repo provides the skeleton to get you started with using <a href="https://github.com/medusajs/medusa">Medusa</a>. Follow the steps below to get ready.
-</p>
-<p align="center">
-  <a href="https://github.com/medusajs/medusa/blob/master/LICENSE">
-    <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Medusa is released under the MIT license." />
-  </a>
-  <a href="https://github.com/medusajs/medusa/blob/master/CONTRIBUTING.md">
-    <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat" alt="PRs welcome!" />
-  </a>
-  <a href="https://discord.gg/xpCwq3Kfn8">
-    <img src="https://img.shields.io/badge/chat-on%20discord-7289DA.svg" alt="Discord Chat" />
-  </a>
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    <img src="https://img.shields.io/twitter/follow/medusajs.svg?label=Follow%20@medusajs" alt="Follow @medusajs" />
-  </a>
-  <p align="center">
-    <a href="https://heroku.com/deploy?template=https://github.com/medusajs/medusa-starter-default/tree/feat/deploy-heroku">
-      <img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy">
-    </a>
-  </p>
-</p>
+# StreamPay™ for Medusa
 
-## Prerequisites
+Stream**Pay**™ is a payment service integration for [Medusa](https://medusa-commerce.com/), designed to handle cryptocurrency and stablecoin payments, such as SOL, USDC, USDT, EURC, and STRM.
 
-This starter has minimal prerequisites and most of these will usually already be installed on your computer.
+What is Stream Payment Gateway?
 
-- [Install Node.js](https://nodejs.org/en/download/)
-- [Install git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- [Install SQLite](https://www.sqlite.org/download.html)
+Stream Payment Gateway is a robust and secure payment gateway, fortified by the Solana blockchain, designed to revolutionize the way businesses handle payments. It empowers businesses to offer their customers a seamless, secure, and lightning-fast payment experience, accepting not only cryptocurrencies but also stablecoins like USDC and EURC with unparalleled ease.
 
-## Setting up your store
+##  Key Features of StreamPayments™:
 
-- Install the Medusa CLI
-  ```
-  npm install -g @medusajs/medusa
-  yarn global add @medusajs/medusa
-  ```
-- Create a new Medusa project
-  ```
-  medusa new my-medusa-store
-  ```
-- Run your project
-  ```
-  cd my-medusa-store
-  medusa develop
-  ```
+- **Secure Checkout Payments**: Our foremost priority is your payment security. Built on the Solana blockchain, **Stream**Payments™ solutions ensures that your transactions are fortified with advanced cryptographic algorithms, guaranteeing the utmost safety and integrity throughout the payment process.
+- **Rapid Transaction Confirmation**: Harnessing the high-performance capabilities of the Solana blockchain, **Stream**Payments™  achieves near-instant transaction confirmations. This means reduced waiting times for your customers and a smoother, more efficient payment experience.
+- **Cryptocurrency Compatibility**: **Stream**Payments™ opens the doors to a wide array of cryptocurrencies, giving businesses the flexibility to accept payments in various digital assets. From popular options like Solana, Bitcoin and Ethereum to a multitude of emerging SPL tokens, your customers have the freedom to choose their preferred payment method.
+- **Stablecoin Support**: In addition to cryptocurrencies, Stream Payment Gateway seamlessly handles stablecoin payments, including USDT, USDC and EURC. This stable foundation offers reduced volatility and creates a secure, dependable environment for your transactions.
+- **User-Friendly Interface**: **Stream**Payments™ merchant portal (Based of Medusa Admin UI) boasts an intuitive, user-friendly interface. It's designed for easy integration, allowing businesses to set up their payment systems effortlessly. Likewise, customers can make payments without hassle, enhancing their shopping experience.
+- **Integration Flexibility**: Our platform offers versatile integration options, enabling businesses to seamlessly incorporate the checkout solution into their existing platforms, websites, or mobile applications. It's a hassle-free process that adapts to your unique requirements.
+- **Real-Time Analytics**: Gain valuable insights into your payment transactions with **Stream**Payments™. Our real-time analytics feature empowers you to monitor sales, track transaction volumes, and analyze customer behavior, enabling data-driven decision-making for your business.
+  
+**Stream**Payments™ simplifies the intricate process of accepting cryptocurrency and stablecoin payments. It equips businesses with a secure and streamlined checkout experience while providing the scalability, speed, and security of the Solana blockchain. Whether you're a small online store or an enterprise-level operation, **Stream**Payments™ ensures that you can meet the diverse payment needs of your customers effortlessly.
 
-Your local Medusa server is now running on port **9000**.
+Revolutionize your payment processing and embark on a journey towards a secure, efficient, and customer-centric payment experience with **Stream**Payments™ today.
 
-### Seeding your Medusa store
+## Table of Contents
 
----
+- [StreamPay™ for Medusa](#streampay-for-medusa)
+  - [Key Features of StreamPayments™:](#key-features-of-streampayments)
+  - [Table of Contents](#table-of-contents)
+  - [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Usage](#usage)
+  - [Contributing](#contributing)
+  - [License](#license)
 
-To seed your medusa store run the following command:
+## Getting Started
 
-```
-medusa seed -f ./data/seed.json
-```
+### Prerequisites
 
-This command seeds your database with some sample data to get you started, including a store, an administrator account, a region and a product with variants. What the data looks like precisely you can see in the `./data/seed.json` file.
+Before you begin, ensure you have met the following requirements:
 
-## Setting up your store with Docker
+- Node.js installed (version >= 14)
+- TypeScript installed (version >= 4)
+- Solana Web3.js
+- [Medusa](https://medusa-commerce.com/) backend set up and running.
 
-- Install the Medusa CLI
-  ```
-  npm install -g @medusajs/medusa-cli
-  ```
-- Create a new Medusa project
-  ```
-  medusa new my-medusa-store
-  ```
-- Update project config in `medusa-config.js`:
+### Installation
 
-  ```
-  module.exports = {
-    projectConfig: {
-      redis_url: REDIS_URL,
-      database_url: DATABASE_URL, //postgres connectionstring
-      database_type: "postgres",
-      store_cors: STORE_CORS,
-      admin_cors: ADMIN_CORS,
-    },
-    plugins,
-  };
-  ```
+To install Stream Payment Gateway, follow these steps:
 
-- Run your project
+1. Clone this repository to your Medusa project directory:
 
-  When running your project the first time `docker compose` should be run with the `build` flag to build your container locally:
+   ```sh
+   git clone https://github.com/stream-protocol/medusa-payment-streampay.git
+   ```
 
-  ```
-  docker-compose up --build
-  ```
+2. Install dependencies:
 
-  When running your project subsequent times you can run docker compose with no flags to spin up your local environment in seconds:
+   ```sh
+   cd medusa-payment-streampay
+   npm install
+   ```
 
-  ```
-  docker-compose up
-  ```
+3. Build the project:
 
-Your local Medusa server is now running on port **9000**.
+   ```sh
+   npm run build
+   ```
 
-### Seeding your Medusa store with Docker
+4. Start your Medusa server:
 
----
+   ```sh
+   npm start
+   ```
 
-To add seed data to your medusa store running with Docker, run this command in a seperate terminal:
+## Configuration
 
-```
-docker exec medusa-server medusa seed -f ./data/seed.json
-```
+Before using Stream**Pay**, you need to configure it. Update the configuration options in `config.ts` to match your requirements. Configuration options may include:
 
-This will execute the previously described seed script in the running `medusa-server` Docker container.
+- `strmProviderUrl`: URL of the Stream Token provider.
+- `strmProviderUser`: User for accessing the Stream Token provider.
+- `strmProviderPassword`: Password for accessing the Stream Token provider.
+- `strmNetworkType`: Network type (Mainnet, Testnet, or Custom).
+- `strmMerchantAddress`: Merchant's Stream Token address.
+- `solWalletAddress`: Merchant's SOL wallet address.
+- Additional options for specific cryptocurrencies or stablecoins.
 
-## Try it out
+## Usage
 
-```
-curl -X GET localhost:9000/store/products | python -m json.tool
-```
+To use Stream**Pay** in your Medusa project, follow these steps:
 
-After the seed script has run you will have the following things in you database:
+1. Import the Stream**Pay** service in your payment controller:
 
-- a User with the email: admin@medusa-test.com and password: supersecret
-- a Region called Default Region with the countries GB, DE, DK, SE, FR, ES, IT
-- a Shipping Option called Standard Shipping which costs 10 EUR
-- a Product called Cool Test Product with 4 Product Variants that all cost 19.50 EUR
+   ```typescript
+   import StreamPayService from './services/stream-pay.service'; // Adjust the import path
+   ```
 
-Visit [docs.medusa-commerce.com](https://docs.medusa-commerce.com) for further guides.
+2. Initialize and configure the service with your payment method:
 
-<p>
-  <a href="https://www.medusa-commerce.com">
-    Website
-  </a> 
-  |
-  <a href="https://medusajs.notion.site/medusajs/Medusa-Home-3485f8605d834a07949b17d1a9f7eafd">
-    Notion Home
-  </a>
-  |
-  <a href="https://twitter.com/intent/follow?screen_name=medusajs">
-    Twitter
-  </a>
-  |
-  <a href="https://docs.medusa-commerce.com">
-    Docs
-  </a>
-</p>
+   ```typescript
+   const streamPayService = new StreamPayService({
+     // Configuration options
+   });
+   ```
+
+3. Implement the required payment methods in your controller. For example:
+
+   ```typescript
+   // Create a payment
+   const createPayment = async (req, res) => {
+     // Implement payment creation logic using StreamPay
+   };
+
+   // Capture a payment
+   const capturePayment = async (req, res) => {
+     // Implement payment capture logic using StreamPay
+   };
+   ```
+
+4. Configure your Medusa payment gateway to use Stream**Pay**.
+
+## Contributing
+
+Contributions are welcome! Here's how you can contribute to this project:
+
+1. Fork the repository.
+2. Create a new branch for your feature or bug fix.
+3. Make your changes and commit them.
+4. Push your changes to your fork.
+5. Open a pull request to the main repository.
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
