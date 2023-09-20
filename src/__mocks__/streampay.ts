@@ -1,99 +1,127 @@
-import { PaymentIntentDataByStatus } from "../__fixtures__/data"
-import StreamPay from "streampay";
+import { PaymentIntentDataByStatus } from "../__fixtures__/data";
 import { ErrorCodes, ErrorIntentStatus } from "../types";
+import {
+  describe,
+  beforeEach,
+  afterEach,
+  beforeAll,
+  expect,
+  jest,
+  it,
+} from "@jest/globals";
+export const WRONG_CUSTOMER_EMAIL = "wrong@test.fr";
+export const EXISTING_CUSTOMER_EMAIL = "right@test.fr";
+export const STREAMPAY_ID = "test";
+export const PARTIALLY_FAIL_INTENT_ID = "partially_unknown";
+export const FAIL_INTENT_ID = "unknown";
+import dotenv from "dotenv";
 
-export const WRONG_CUSTOMER_EMAIL = "wrong@test.fr"
-export const EXISTING_CUSTOMER_EMAIL = "right@test.fr"
-export const STREAMPAY_ID = "test"
-export const PARTIALLY_FAIL_INTENT_ID = "partially_unknown"
-export const FAIL_INTENT_ID = "unknown"
+dotenv.config();
+
+const mockEnabled = process.env.DISABLE_MOCKS == "true" ? false : true;
+
+export function isMocksEnabled(): boolean {
+  if (mockEnabled) {
+    console.log("using mocks");
+  }
+  return mockEnabled;
+}
 
 export const StreamPayMock = {
   paymentIntents: {
     retrieve: jest.fn().mockImplementation(async (paymentId) => {
       if (paymentId === FAIL_INTENT_ID) {
-        throw new Error("Error")
+        throw new Error("Error");
       }
 
-      return Object.values(PaymentIntentDataByStatus).find(value => {
-        return value.id === paymentId
-      }) ?? {}
+      return (
+        Object.values(PaymentIntentDataByStatus).find((value) => {
+          return value.id === paymentId;
+        }) ?? {}
+      );
     }),
-    update: jest.fn().mockImplementation(async (paymentId, updateData) => {
+    update: jest.fn().mockImplementation(async (paymentId, updateData: any) => {
       if (paymentId === FAIL_INTENT_ID) {
-        throw new Error("Error")
+        throw new Error("Error");
       }
 
-      const data = Object.values(PaymentIntentDataByStatus).find(value => {
-        return value.id === paymentId
-      }) ?? {}
+      const data =
+        Object.values(PaymentIntentDataByStatus).find((value) => {
+          return value.id === paymentId;
+        }) ?? {};
 
-      return { ...data, ...updateData }
+      return { ...data, ...updateData };
     }),
-    create: jest.fn().mockImplementation(async (data) => {
+    create: jest.fn().mockImplementation(async (data: any) => {
       if (data.description === "fail") {
-        throw new Error("Error")
+        throw new Error("Error");
       }
 
-      return data
+      return data;
     }),
     cancel: jest.fn().mockImplementation(async (paymentId) => {
       if (paymentId === FAIL_INTENT_ID) {
-        throw new Error("Error")
+        throw new Error("Error");
       }
 
       if (paymentId === PARTIALLY_FAIL_INTENT_ID) {
-        throw new StreamPay.errors.StreamPayError({
-          code: ErrorCodes.PAYMENT_INTENT_UNEXPECTED_STATE,
-          payment_intent: {
-            id: paymentId,
-            status: ErrorIntentStatus.CANCELED
-          } as unknown as StreamPay.PaymentIntent,
-          type: "invalid_request_error"
-        })
+        throw new Error(
+          JSON.stringify({
+            code: ErrorCodes.PAYMENT_INTENT_UNEXPECTED_STATE,
+            payment_intent: {
+              id: paymentId,
+              status: ErrorIntentStatus.CANCELED,
+            } as any,
+            type: "invalid_request_error",
+          })
+        );
       }
 
-      return { id: paymentId }
+      return { id: paymentId };
     }),
     capture: jest.fn().mockImplementation(async (paymentId) => {
       if (paymentId === FAIL_INTENT_ID) {
-        throw new Error("Error")
+        throw new Error("Error");
       }
 
       if (paymentId === PARTIALLY_FAIL_INTENT_ID) {
-        throw new StreamPay.errors.StreamPayError({
-          code: ErrorCodes.PAYMENT_INTENT_UNEXPECTED_STATE,
-          payment_intent: {
-            id: paymentId,
-            status: ErrorIntentStatus.SUCCEEDED
-          } as unknown as StreamPay.PaymentIntent,
-          type: "invalid_request_error"
-        })
+        throw Error(
+          JSON.stringify({
+            code: ErrorCodes.PAYMENT_INTENT_UNEXPECTED_STATE,
+            payment_intent: {
+              id: paymentId,
+              status: ErrorIntentStatus.SUCCEEDED,
+            } as any,
+            type: "invalid_request_error",
+          })
+        );
       }
 
-      return { id: paymentId }
-    })
+      return { id: paymentId };
+    }),
   },
   refunds: {
-    create: jest.fn().mockImplementation(async ({  payment_intent: paymentId }) => {
-      if (paymentId === FAIL_INTENT_ID) {
-        throw new Error("Error")
-      }
+    create: jest
+      .fn()
+      .mockImplementation(async ({ payment_intent: paymentId }: any) => {
+        if (paymentId === FAIL_INTENT_ID) {
+          throw new Error("Error");
+        }
 
-      return { id: paymentId }
-    })
+        return { id: paymentId };
+      }),
   },
   customers: {
-    create: jest.fn().mockImplementation(async (data) => {
+    create: jest.fn().mockImplementation(async (data: any) => {
       if (data.email === EXISTING_CUSTOMER_EMAIL) {
-        return { id: STREAMPAY_ID, ...data }
+        return { id: STREAMPAY_ID, ...data };
       }
 
-      throw new Error("Error")
-    })
+      throw new Error("Error");
+    }),
   },
-}
+};
 
-const streampay = jest.fn(() => StreamPayMock)
+const streampay = jest.fn(() => StreamPayMock);
 
-export default streampay
+export default streampay;

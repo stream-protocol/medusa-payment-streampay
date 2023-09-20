@@ -1,7 +1,8 @@
+// Import necessary dependencies and types
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
-@Entity('streampay_eurc_transactions')
-export class StreamPayEURC {
+@Entity('transactions') // Replace 'transactions' with your actual table name
+export class Transaction {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -9,13 +10,13 @@ export class StreamPayEURC {
   userId: string;
 
   @Column({ type: 'decimal', precision: 18, scale: 6 })
-  eurcAmount: number;
+  amount: number;
 
   @CreateDateColumn()
   timestamp: Date;
 
   @Column({ type: 'text' })
-  transactionId: string;
+  description: string;
 
   // Add additional fields as needed
   // @Column({ type: 'text' })
@@ -23,14 +24,14 @@ export class StreamPayEURC {
 
   constructor(
     userId: string,
-    eurcAmount: number,
-    transactionId: string
+    amount: number,
+    description: string
     // Add additional fields in the constructor as needed
     // additionalField: string
   ) {
     this.userId = userId;
-    this.eurcAmount = eurcAmount;
-    this.transactionId = transactionId;
+    this.amount = amount;
+    this.description = description;
     // Assign additional fields in the constructor as needed
     // this.additionalField = additionalField;
   }

@@ -1,7 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
-@Entity('streampay_sol_transactions')
-export class StreamPaySOL {
+@Entity('streampay_usdt_transactions')
+export class StreamPayUSDT {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
@@ -9,7 +9,7 @@ export class StreamPaySOL {
   userId: string;
 
   @Column({ type: 'decimal', precision: 18, scale: 6 })
-  solAmount: number;
+  usdtAmount: number;
 
   @CreateDateColumn()
   timestamp: Date;
@@ -23,12 +23,12 @@ export class StreamPaySOL {
 
   constructor(
     userId: string,
-    solAmount: number,
+    usdtAmount: number,
     trxId: string,
     additionalField: string | null = null
   ) {
     this.userId = userId;
-    this.solAmount = solAmount;
+    this.usdtAmount = usdtAmount;
     this.trxId = trxId;
     this.additionalField = additionalField;
   }

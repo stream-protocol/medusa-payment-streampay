@@ -1,7 +1,37 @@
-import { EntityRepository, Repository } from 'typeorm';
-import { StreamPayUSDC } from '../models/streampay-usdc';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
-@EntityRepository(StreamPayUSDC)
-export class StreamPayUSDCRepository extends Repository<StreamPayUSDC> {
-  // Add custom repository methods if needed
+@Entity('streampay_usdc_transactions')
+export class StreamPayUSDC {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'uuid' })
+  userId: string;
+
+  @Column({ type: 'decimal', precision: 18, scale: 6 })
+  usdcAmount: number;
+
+  @CreateDateColumn()
+  timestamp: Date;
+
+  @Column({ type: 'text' })
+  transactionId: string;
+
+  // Add additional fields as needed
+  // @Column({ type: 'text' })
+  // additionalField: string;
+
+  constructor(
+    userId: string,
+    usdcAmount: number,
+    transactionId: string
+    // Add additional fields in the constructor as needed
+    // additionalField: string
+  ) {
+    this.userId = userId;
+    this.usdcAmount = usdcAmount;
+    this.transactionId = transactionId;
+    // Assign additional fields in the constructor as needed
+    // this.additionalField = additionalField;
+  }
 }
