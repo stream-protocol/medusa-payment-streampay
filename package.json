@@ -47,6 +47,8 @@
     "@medusajs/medusa": "^1.16.0",
     "@solana/wallet-adapter-react": "^0.15.35",
     "@solana/web3.js": "^1.78.5",
+    "react": "^18.2.0",
+    "react-router-dom": "^6.13.0",
     "api": "^6.1.0",
     "axios": "0.5.0",
     "body-parser": "^1.19.0",
