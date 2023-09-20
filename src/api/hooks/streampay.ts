@@ -7,6 +7,7 @@ export default async (req: Request, res: Response) => {
   let event: StreamPayEvent;
   const logger = req.scope.resolve("logger") as Logger;
   try {
+    // Construct the StreamPayEvent from the incoming request
     event = constructWebhook({
       signature: req.headers["x-verify"] as string,
       encodedBody: req.body,
@@ -22,13 +23,16 @@ export default async (req: Request, res: Response) => {
     return;
   }
 
+  // Extract payment intent data from the event
   const paymentIntent = event.data.object as unknown as StreamPayS2SResponse;
 
+  // Handle the payment hook event
   const { statusCode } = await handlePaymentHook({
     event,
     container: req.scope,
     paymentIntent,
   });
+
   logger.info(`payment status code: ${statusCode}`);
   res.sendStatus(statusCode);
 };

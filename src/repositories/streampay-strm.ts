@@ -1,4 +1,4 @@
-import { EntityRepository, Repository } from 'typeorm';
+import { Repository, Repository } from 'typeorm';
 import { StreamPaySTRM } from '../models/streampay-strm';
 
 @EntityRepository(StreamPaySTRM)

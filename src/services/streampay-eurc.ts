@@ -1,25 +1,17 @@
-// Import necessary dependencies and types
 import StreamPayBase from "../core/streampay-base";
-import { PaymentIntentOptions, PaymentProviderKeys } from "../types";
+import { PaymentProviderKeys, PaymentProcessorError, PaymentProcessorSessionResponse } from "../types";
 
-// Define the StreamPayProviderService class that extends StreamPayBase
 class StreamPayProviderService extends StreamPayBase {
-  // Define a static identifier for this payment provider
   static identifier = PaymentProviderKeys.EURC;
 
-  // Constructor for the StreamPayProviderService class
   constructor(_, options) {
-    super(_, options); // Call the constructor of the parent class (StreamPayBase)
+    super(_, options);
   }
 
-  // Define a getter for payment intent options
-  get paymentIntentOptions(): PaymentIntentOptions {
-    return {
-      payment_method_types: ["EURC"],  // Specify the payment method type as "EURC"
-      capture_method: "automatic",     // Set the capture method to "automatic"
-    };
+  async updatePaymentData(sessionId: string, data: Record<string, unknown>): Promise<PaymentProcessorError | PaymentProcessorSessionResponse["session_data"]> {
+    // Implement the logic to update payment data for EURC coin payments
+    // You can return the updated session data or an error if needed
   }
 }
 
-// Export the StreamPayProviderService class as the default export of this module
 export default StreamPayProviderService;
