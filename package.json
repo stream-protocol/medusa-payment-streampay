@@ -1,7 +1,7 @@
 {
     "name": "medusa-payment-streampay",
     "version": "1.0.0",
-    "description": "StreamPayment™ provider for Medusa e-commerce",
+    "description": "StreamPayment™ provider for Medusa commerce",
     "main": "dist/index.js",
     "repository": "https://github.com/stream-protocol/medusa-payment-streampay.git",
     "files": [
@@ -15,18 +15,15 @@
         "prepare": "cross-env NODE_ENV=production npm run build"
     },
     "peerDependencies": {
-        "@medusajs/medusa": "^1.15.0",
+        "@medusajs/medusa": "^1.16.0",
         "medusa-interfaces": "^1.3.7",
         "typeorm": "^0.3.17"
     },
     "keywords": [
         "medusa",
-        "medusa-plugin",
         "medusa-payment",
-        "solana",
-        "sol",
-        "payment",
-        "streampay",
+        "medusa-payment-streampay",
+        "blockchain",
         "gateway"
     ],
     "devDependencies": {
@@ -44,7 +41,6 @@
         "streampay-javascript": "^0.1.0",
         "@solana/wallet-adapter-react": "^0.15.35",
         "@solana/web3.js": "^1.78.4",
-        "@stream-pay/medusa": "^1.0.0",
         "body-parser": "^1.20.2",
         "express": "^4.18.2",
         "medusa-core-utils": "^1.2.0",

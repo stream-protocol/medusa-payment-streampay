@@ -31,8 +31,8 @@ export interface StreamPaymentsOptions {
   }
   
   export const PaymentProviderKeys = {
-    STREAMPAY: "streampay",
-    SOLANA: "streampay-solana",
+    STREAMPAY: "streampay-spay",
+    SOLANA: "streampay-sol",
     USDC: "streampay-usdc",
     EURC: "streampay-eurc",
     USDT: "streampay-usdt",
