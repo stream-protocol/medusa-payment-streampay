@@ -1,0 +1,41 @@
+name: medusa-payment-streampay
+  push:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    environment: UAT
+    env:
+      STREAMPAY_USDC: ${{vars.STREAMPAY_USDC}}
+      STREAMPAY_MERCHANT_ACCOUNT: ${{vars.STREAMPAY_MERCHANT_ACCOUNT}} #FOR UAT TESTING MERCHANTUAT
+      DISABLE_MOCKS: "true"
+      STREAMPAY_MODE: "uat"
+    strategy:
+      matrix:
+        node-verion: [16.x]
+    steps:
+      - name: Cancel Previous Runs
+        uses: styfle/cancel-workflow-action@0.9.1
+        with:
+          access_token: ${{ github.token }}
+
+      - name: Checkout
+        uses: actions/checkout@v2.3.5
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.1.1
+        with:
+          node-version: ${{ matrix.node-verion }}
+
+      - name: 'yarn install'
+        working-directory: ./
+        run: yarn
+
+      - name: 'run unit tests'
+        working-directory: ./
+        run: yarn run test
