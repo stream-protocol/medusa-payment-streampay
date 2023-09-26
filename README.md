@@ -48,7 +48,7 @@ Provide a brief introduction to the project and its purpose. Explain why integra
 Explain how users can configure the integration to work with their StreamPay account and Medusa setup. Include details on configuration files, environment variables, or any other settings that need to be adjusted.
 
 ```json
-// Example configuration file (streampay-config.json)
+// Example configuration file (medusa-config.json)
 {
   "apiKey": "YOUR_STREAMPAY_API_KEY",
   "solanaProviderUrl": "https://api.mainnet-beta.solana.com",

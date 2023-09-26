@@ -1,46 +1,43 @@
-import express, { Request, Response, NextFunction } from 'express';
-import { PaymentController } from './PaymentController'; // Import your PaymentController
+import { Router, Request, Response } from "express";
+import PaymentController from "../controllers/payment-controller";
 
-// Create an instance of the Express router
-const paymentRouter = express.Router();
-
-// Initialize a PaymentController
+const router = Router();
 const paymentController = new PaymentController();
 
-// Define a route for initiating a payment
-paymentRouter.post('/initiate-payment', async (req: Request, res: Response, next: NextFunction) => {
+// Route to create a payment
+router.post("/payments", async (req: Request, res: Response) => {
   try {
-    // Call the initiatePayment method from the PaymentController
-    const paymentResult = await paymentController.initiatePayment(req.body);
+    // Extract data from the request body
+    const { amount, currency, description } = req.body;
 
-    // Handle the payment result and send a response
-    if (paymentResult.success) {
-      return res.status(200).json({ message: 'Payment initiated successfully', data: paymentResult.data });
-    } else {
-      return res.status(400).json({ message: 'Payment initiation failed', error: paymentResult.error });
-    }
+    // Call the createPayment method from PaymentController
+    const payment = await paymentController.createPayment(amount, currency, description);
+
+    // Return the payment as a response
+    res.status(201).json(payment);
   } catch (error) {
-    next(error);
+    console.error("Error creating payment:", error);
+    res.status(500).json({ error: "Failed to create payment" });
   }
 });
 
-// Define a route for capturing a payment
-paymentRouter.post('/capture-payment', async (req: Request, res: Response, next: NextFunction) => {
+// Route to get payment details by ID
+router.get("/payments/:paymentId", async (req: Request, res: Response) => {
   try {
-    // Call the capturePayment method from the PaymentController
-    const captureResult = await paymentController.capturePayment(req.body);
+    // Extract the payment ID from the request params
+    const paymentId = req.params.paymentId;
 
-    // Handle the capture result and send a response
-    if (captureResult.success) {
-      return res.status(200).json({ message: 'Payment captured successfully', data: captureResult.data });
-    } else {
-      return res.status(400).json({ message: 'Payment capture failed', error: captureResult.error });
-    }
+    // Call the getPaymentById method from PaymentController
+    const payment = await paymentController.getPaymentById(paymentId);
+
+    // Return the payment details as a response
+    res.status(200).json(payment);
   } catch (error) {
-    next(error);
+    console.error("Error getting payment details:", error);
+    res.status(500).json({ error: "Failed to get payment details" });
   }
 });
 
-// Define other payment-related routes as needed
+// Add more payment-related routes as needed
 
-export default paymentRouter;
+export default router;

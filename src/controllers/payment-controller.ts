@@ -1,59 +1,43 @@
-import { Request, Response } from 'express';
-import { PaymentService } from '../services'; // Import your payment service
+import express, { Request, Response } from 'express';
+import PaymentService from './payment-service'; // Import your PaymentService here
 
-class PaymentController {
-  constructor(private paymentService: PaymentService) {}
+const paymentRouter = express.Router();
+const paymentService = new PaymentService(); // Create an instance of your PaymentService
 
-  // Route to create a new payment
-  async createPayment(req: Request, res: Response) {
-    try {
-      const paymentData = req.body;
+// Route to create a payment
+paymentRouter.post('/create-payment', async (req: Request, res: Response) => {
+  try {
+    // Extract data from the request body
+    const { amount, currency, description } = req.body;
 
-      // Call the payment service to create a new payment
-      const payment = await this.paymentService.createPayment(paymentData);
+    // Call the createPayment method from PaymentService
+    const payment = await paymentService.createPayment(amount, currency, description);
 
-      res.status(201).json(payment);
-    } catch (error) {
-      console.error('Error creating payment:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+    // Return the payment as a response
+    res.status(201).json(payment);
+  } catch (error) {
+    console.error('Error creating payment:', error);
+    res.status(500).json({ error: 'Failed to create payment' });
   }
+});
 
-  // Route to process a payment
-  async processPayment(req: Request, res: Response) {
-    try {
-      const paymentId = req.params.id;
+// Route to get payment details by ID
+paymentRouter.get('/get-payment/:paymentId', async (req: Request, res: Response) => {
+  try {
+    // Extract the payment ID from the request params
+    const paymentId = req.params.paymentId;
 
-      // Call the payment service to process the payment
-      const result = await this.paymentService.processPayment(paymentId);
+    // Call the getPaymentById method from your PaymentService
+    const payment = await paymentService.getPaymentById(paymentId);
 
-      if (result.success) {
-        res.status(200).json({ message: 'Payment processed successfully' });
-      } else {
-        res.status(400).json({ error: 'Payment processing failed' });
-      }
-    } catch (error) {
-      console.error('Error processing payment:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+    // Return the payment details as a response
+    res.status(200).json(payment);
+  } catch (error) {
+    console.error('Error getting payment details:', error);
+    res.status(500).json({ error: 'Failed to get payment details' });
   }
+});
 
-  // Route to handle payment callbacks
-  async handleCallback(req: Request, res: Response) {
-    try {
-      // Parse and handle the callback data
-      const callbackData = req.body;
+// Add more payment-related routes as needed
 
-      // Call the payment service to handle the callback
-      await this.paymentService.handleCallback(callbackData);
-
-      // Respond to the callback
-      res.status(200).send('Callback handled successfully');
-    } catch (error) {
-      console.error('Error handling payment callback:', error);
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
-}
-
-export default PaymentController;
+export default paymentRouter;
