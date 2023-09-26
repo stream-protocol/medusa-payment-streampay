@@ -14,6 +14,7 @@ This repository contains the Medusa payment provider integration for StreamPay, 
     - [Installation](#installation)
   - [Configuration](#configuration)
   - [Usage](#usage)
+  - [Folder and File Structure](#folder-and-file-structure)
   - [Contributing](#contributing)
   - [License](#license)
 
@@ -72,6 +73,59 @@ const paymentData = {
 };
 
 const payment = streamPay.createPayment(paymentData);
+```
+
+## Folder and File Structure
+```
+src/
+│
+├── controllers/          # Controllers for handling HTTP requests
+│   ├── PaymentController.ts
+│   ├── CartController.ts
+│   ├── UserController.ts
+│   └── ...
+│
+├── services/             # Business logic and services
+│   ├── StreamPaymentService.ts
+│   ├── CartService.ts
+│   ├── UserService.ts
+│   ├── PaymentMethod/    # Folder for payment method-specific logic
+│   │   ├── USDCPayment.ts
+│   │   ├── EURCPayment.ts
+│   │   ├── USDTPayment.ts
+│   │   ├── SOLPayment.ts
+│   │   ├── STRMPayment.ts
+│   │   └── ...
+│   └── ...
+│
+├── models/               # Data models and entities
+│   ├── StreamPayment.ts
+│   ├── Cart.ts
+│   ├── User.ts
+│   ├── Product.ts
+│   └── ...
+│
+├── repositories/         # Database repositories
+│   ├── StreamPaymentRepository.ts
+│   ├── CartRepository.ts
+│   ├── UserRepository.ts
+│   ├── ProductRepository.ts
+│   └── ...
+│
+├── routes/               # API route definitions
+│   ├── paymentRoutes.ts
+│   ├── cartRoutes.ts
+│   ├── userRoutes.ts
+│   └── ...
+│
+├── config/               # Configuration files
+│   ├── database.ts       # Database configuration
+│   ├── paymentConfig.ts  # Payment method configuration
+│   └── ...
+│
+├── app.ts                # Main application entry point
+├── index.ts              # Entry point to start the server
+└── ...
 ```
 
 ## Contributing
