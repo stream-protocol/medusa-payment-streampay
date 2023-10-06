@@ -1,0 +1,42 @@
+---
+title: "Stream Payment Gateway"
+---
+
+# What is Stream Payment Gateway?
+
+Stream Payment Gateway is a sophisticated system designed to facilitate payments on the Solana blockchain using StreamPayments platform, stablecoins and SPL tokens. It offers a seamless experience for both merchants and customers, ensuring secure and efficient transactions. Let's dive into its workings and architecture.
+
+## Overview
+
+The Stream Payment Gateway acts as a mediator between the payer and the merchant on the Solana blockchain. It handles SPL token payments, deducts fees, and ensures that merchants receive their funds in their wallets. The entire process is transparent, secure, and efficient, leveraging the speed and low fees of the Solana blockchain.
+
+## Key Components
+
+1. **Initialization**: The gateway is initialized with specific configurations, including network details and fee percentages. A connection to the Solana blockchain is established.
+
+2. **Payment Creation**: Users initiate a payment request containing details like amount, currency, and other metadata. The gateway calculates the total amount, including any applicable fees.
+
+3. **Authorization**: The gateway checks if the payer has sufficient funds and reserves the amount for the payment.
+
+4. **Capture**: After authorization, the merchant captures the payment. The gateway transfers the funds from the payer's account to the merchant's account, deducting any fees.
+
+5. **SPL Token Transfers**: The gateway uses the SPL token program's instructions to facilitate token transfers.
+
+6. **Error Handling**: The gateway provides error messages and logs any failures.
+
+7. **Utility Functions**: These ensure data integrity and consistency.
+
+8. **Event Logging**: Events like payment creation, authorization, and capture are logged for monitoring and debugging.
+
+9. **Merchant Wallet Integration**: Payments are securely transferred to the merchant's SPL token wallet.
+
+## Architecture
+
+<Image src="/public/images/architecture-diagram.png" alt="Stream Payment Gateway Architecture" />
+
+The architecture diagram above provides a visual representation of the Stream Payment Gateway's components and their interactions. It showcases the flow of SPL tokens, the role of the Solana blockchain, and the integration points with merchant wallets.
+
+## Conclusion
+
+The Stream Payment Gateway offers a robust solution for SPL token payments on the Solana blockchain. Its architecture is designed for scalability, security, and efficiency, ensuring a seamless payment experience for all parties involved.
+

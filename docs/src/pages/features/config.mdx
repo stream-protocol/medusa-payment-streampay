@@ -1,0 +1,81 @@
+---
+
+# StreamPay Plugin Installation on Medusa Commerce
+
+Medusa Commerce is a flexible and modular open-source e-commerce platform, and integrating the Stream Payment Gateway with it can supercharge your store with the power of decentralized payments. Here's a step-by-step guide to help you seamlessly integrate the Stream Payment Gateway with Medusa Commerce.
+
+## Prerequisites:
+
+1. **Medusa Commerce Setup**: Ensure you have a running instance of Medusa Commerce.
+2. **StreamPayments™ Account**: Sign up and get your Stream Payment Gateway API keys from the StreamPayments platform.
+3. **Node.js & npm**: Ensure you have Node.js and npm installed.
+
+## Installation Steps:
+
+### 1. Install the StreamPay Plugin:
+
+Using npm, install the Stream Payment Gateway plugin for Medusa:
+
+```bash
+npm install @stream-payments/medusa-plugin-streampay
+```
+
+### 2. Configure Medusa:
+
+Open your Medusa configuration file (`medusa-config.js`) and add the Stream Payment Gateway plugin:
+
+```javascript
+module.exports = {
+  plugins: [
+    // ... other plugins
+    {
+      resolve: "@stream-payments/medusa-plugin-streampay",
+      options: {
+        apiKey: "YOUR_STREAM_PAYMENTS_API_KEY",
+        // other configuration options
+      },
+    },
+  ],
+};
+```
+
+Replace `YOUR_STREAM_PAYMENTS_API_KEY` with the API key you obtained from the Stream Payment Gateway platform.
+
+### 3. Initialize the Plugin:
+
+In your Medusa server initialization script, import and initialize the StreamPay (Stream Payment Gateway) plugin:
+
+```javascript
+const StreamPaymentProvider = require("@stream-payments/medusa-plugin");
+
+// ... other imports and initialization code
+
+Medusa.boot({
+  // ... other boot options
+  paymentProviders: [
+    // ... other payment providers
+    new StreamPaymentProvider({
+      apiKey: "YOUR_STREAM_PAYMENTS_API_KEY",
+      // other initialization options
+    }),
+  ],
+});
+```
+
+### 4. Test the Integration:
+
+Before deploying to a production environment, ensure you test the integration:
+
+1. Create a test product on your Medusa store.
+2. Attempt to purchase the product using the Stream Payment Gateway.
+3. Verify that the payment goes through and that the funds are correctly transferred.
+
+## Conclusion:
+
+You've now successfully integrated the Stream Payment Gateway with Medusa Commerce. This integration not only allows you to accept a wide range of cryptocurrencies but also ensures that your e-commerce platform is future-proof and ready to embrace the decentralized world of blockchain payments.
+
+For further configurations, customizations, or troubleshooting, refer to the official Stream Payment Gateway documentation or reach out to the support team.
+
+Happy selling with Medusa and Stream Payment Gateway! 🚀
+
+---

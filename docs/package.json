@@ -1,0 +1,26 @@
+{
+    "name": "medusa-payment-streampay-doc",
+    "license": "MIT",
+    "private": true,
+    "scripts": {
+        "build": "next build",
+        "clean": "rimraf .next .turbo",
+        "dev": "next",
+        "start": "next start"
+    },
+    "dependencies": {
+        "next": "^13.5.3",
+        "nextra": "workspace:*",
+        "nextra-theme-docs": "workspace:*",
+        "react": "*",
+        "react-dom": "*"
+    },
+    "dependenciesMeta": {
+        "nextra": {
+            "injected": true
+        },
+        "nextra-theme-docs": {
+            "injected": true
+        }
+    }
+}
