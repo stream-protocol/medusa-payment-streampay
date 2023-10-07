@@ -50,7 +50,7 @@ class PaymentService {
         }
     }
 
-    // ... other methods related to payment operations
+    // ... other methods related to Stream Payment operations
 }
 
 export default PaymentService;
