@@ -1,4 +1,4 @@
-import StreamPayment, { StreamTransactionAuthorisation } from "../lib/streampay";
+import StreamPay, { StreamPayTransactionAuthorization } from "../lib/streampay";
 
 import {
   AbstractPaymentProcessor,
@@ -12,7 +12,7 @@ import {
 import { MedusaError, MedusaErrorTypes } from "@medusajs/utils";
 import { validateCurrencyCode } from "../utils/currencyCode";
 
-export interface StreamPaymentProcessorConfig {
+export interface StreamPayProcessorConfig {
   /**
    * StreamPayment Secret Key
    *
@@ -37,7 +37,7 @@ class StreamPayProcessor extends AbstractPaymentProcessor {
 
   protected readonly cartService: CartService;
   protected readonly configuration: StreamPayProcessorConfig;
-  protected readonly streampayment: Stream;
+  protected readonly streampay: StreamPay;
   protected readonly debug: boolean;
 
   constructor(
@@ -49,12 +49,12 @@ class StreamPayProcessor extends AbstractPaymentProcessor {
     if (!options.secret_key) {
       throw new MedusaError(
         MedusaError.Types.INVALID_ARGUMENT,
-        "The Stream provider requires the secret_key option",
+        "The StreamPay provider requires the secret_key option",
       );
     }
 
     this.configuration = options;
-    this.streampay = new Stream(this.configuration.secret_key);
+    this.streampay = new StreamPay(this.configuration.secret_key);
     this.debug = Boolean(options.debug);
 
     // @ts-expect-error - Container is just an object - https://docs.medusajs.com/development/fundamentals/dependency-injection#in-classes
@@ -80,7 +80,7 @@ class StreamPayProcessor extends AbstractPaymentProcessor {
     | (PaymentProcessorSessionResponse & {
         session_data: {
           streampayTxRef: string;
-          streampayTxAuthData: StreamTransactionAuthorisation;
+          streampayTxAuthData: StreamPayTransactionAuthorization;
           cartId: string;
         };
       })
@@ -357,7 +357,7 @@ class StreamPayProcessor extends AbstractPaymentProcessor {
   }
 
   /**
-   * Returns Stream transaction status
+   * Returns StreamPay transaction status
    */
   async getPaymentStatus(
     paymentSessionData: Record<string, unknown> & { streampayTxId?: string },
@@ -408,8 +408,8 @@ class StreamPayProcessor extends AbstractPaymentProcessor {
   }
 
   /**
-   * Cancel payment for Stream payment intent.
-   * This is not supported by Stream - transactions are stateless.
+   * Cancel payment for Stream Payment intent.
+   * This is not supported by StreamPay - transactions are stateless.
    */
   async cancelPayment(
     paymentSessionData: Record<string, unknown>,
@@ -417,8 +417,8 @@ class StreamPayProcessor extends AbstractPaymentProcessor {
     return paymentSessionData;
   }
   /**
-   * Delete payment for Stream payment intent.
-   * This is not supported by Stream - transactions are stateless.
+   * Delete payment for Stream Payment intent.
+   * This is not supported by StreamPay - transactions are stateless.
    */
   async deletePayment(
     paymentSessionData: Record<string, unknown>,
