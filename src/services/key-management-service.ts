@@ -1,28 +1,3 @@
-# StreanPay services
-
-You may define custom services that will be registered on the global container by creating files in the `/services` directory that export an instance of `BaseService`.
-
-```ts
-// src/services/streampay.ts
-
-
-### Private Key Management Overview:
-
-1. **Never Hardcode Private Keys**: Hardcoding private keys, even in environment variables, can be risky. If the codebase gets exposed, the private keys are compromised.
-
-2. **Use Secure Vaults**: Consider using services like AWS Secrets Manager, HashiCorp Vault, or Azure Key Vault. These services allow you to store, retrieve, and manage secrets securely.
-
-3. **Key Rotation**: Implement mechanisms to rotate keys periodically. Secure vaults usually provide functionalities to rotate secrets.
-
-4. **Access Control**: Ensure that only authorized applications or users can access the private keys. Use IAM roles, policies, and other access control mechanisms.
-
-5. **Auditing**: Monitor and log access to the private keys. This helps in identifying any unauthorized access attempts.
-
-### Basic Implementation:
-
-For this example, let's assume you're using AWS Secrets Manager to manage the Solana private key:
-
-```typescript
 import { SecretsManager } from 'aws-sdk';
 import { Logger } from './logger'; // Assuming you have a logger module
 
@@ -77,8 +52,3 @@ class PrivateKeyManager {
 
 // Usage
 const privateKeyManager = new PrivateKeyManager('solanaPrivateKey');
-```
-
-This `PrivateKeyManager` class provides methods to fetch and rotate the Solana private key using AWS Secrets Manager. Depending on your actual requirements and infrastructure, you might need to integrate with other services or make further adjustments.
-
-Remember to set up the necessary AWS credentials and permissions to access Secrets Manager.

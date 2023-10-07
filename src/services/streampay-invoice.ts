@@ -9,6 +9,9 @@ import { Repository } from "typeorm";
 import { Options, optionsSchema } from "../lib/options";
 import { Logger } from "./logger"; // Assuming you have a logger module
 
+/**
+ * StreamPayInvoiceService: A service layer that handles invoice-related operations with StreamPay.
+ */
 class StreamPayInvoiceService extends TransactionBaseService {
     private client: StreamPayClient;
     private orderRepository_: Repository<Order>;
@@ -42,16 +45,18 @@ class StreamPayInvoiceService extends TransactionBaseService {
             });
 
             if (!order) {
-                this.logger.error(`Order with display ID ${orderDisplayId} not found.`);
-                throw new MedusaError(MedusaError.Types.NOT_FOUND, `Order with display ID ${orderDisplayId} not found.`);
+                const errorMsg = `Order with display ID ${orderDisplayId} not found.`;
+                this.logger.error(errorMsg);
+                throw new MedusaError(MedusaError.Types.NOT_FOUND, errorMsg);
             }
 
             const orderId = order.id;
             const invoiceResponse = await this.client.getInvoice(invoiceId, this.options_.invoiceForm);
 
             if (!invoiceResponse.data) {
-                this.logger.error(`Invoice with ID ${invoiceId} not found.`);
-                throw new MedusaError(MedusaError.Types.NOT_FOUND, `Invoice with ID ${invoiceId} not found.`);
+                const errorMsg = `Invoice with ID ${invoiceId} not found.`;
+                this.logger.error(errorMsg);
+                throw new MedusaError(MedusaError.Types.NOT_FOUND, errorMsg);
             }
 
             const invoiceBuffer = invoiceResponse.data as Buffer;

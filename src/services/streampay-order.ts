@@ -6,6 +6,9 @@ import { Repository } from "typeorm";
 import { optionsSchema } from "../lib/options";
 import { Logger } from "./logger"; // Assuming you have a logger module
 
+/**
+ * StreamPayOrderService: A service layer that handles order-related operations with StreamPay.
+ */
 class StreamPayOrderService extends TransactionBaseService {
     private client: StreamPayClient;
     private orderRepository_: Repository<Order>;
@@ -70,8 +73,9 @@ class StreamPayOrderService extends TransactionBaseService {
             });
 
             if (!order) {
-                this.logger.error(`Order with ID ${orderId} not found`);
-                throw new MedusaError(MedusaError.Types.NOT_FOUND, "Order not found");
+                const errorMsg = `Order with ID ${orderId} not found`;
+                this.logger.error(errorMsg);
+                throw new MedusaError(MedusaError.Types.NOT_FOUND, errorMsg);
             }
 
             await this.createOrder(order);

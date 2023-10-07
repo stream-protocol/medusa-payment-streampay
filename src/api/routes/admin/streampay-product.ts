@@ -11,7 +11,7 @@ export default (router: Router, rootDirectory, options) => {
 
     // Set up a POST route to sync products from StreamPay
     router.post("/products/sync", authMiddleware, wrapHandler(async (req, res) => {
-        const mwProductService: StreamPayProductService = req.scope.resolve("streampayProductService");
+        const mwProductService: StreamPayProductService = req.scope.resolve("StreamPayProductService");
         
         try {
             // Sync all products from StreamPay

@@ -16,7 +16,7 @@ const syncInventory = async (
     {},
     parsedOptions.scheduledSyncString,
     async () => {
-      const mwProductService: StreamPayProductService = container.resolve("streampayProductService");
+      const mwProductService: StreamPayProductService = container.resolve("StreamPayProductService");
       await mwProductService.syncAllInventoryFromStreamPay();
     },
   );

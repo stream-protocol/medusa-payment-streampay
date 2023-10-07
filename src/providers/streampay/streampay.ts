@@ -1,6 +1,6 @@
 import { StreamPayClient } from "@streampayments/streampay";
 import { formatCurrency, validatePaymentRequest } from "./utils";
-import { StreamPaymentRequest, StreamPaymentResponse } from "./types";
+import { StreamPayRequest, StreamPayResponse } from "./types";
 
 class StreamPayProvider {
     private client: StreamPayClient;

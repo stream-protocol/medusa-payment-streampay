@@ -10,6 +10,7 @@ import { Repository } from "typeorm";
 import { StreamPayClient } from "@streampayments/streampay";
 import { z } from "zod";
 import { optionsSchema } from '../lib/options'
+import { Logger } from "./logger"; // Assuming you have a logger module
 
 export type StreamPayProductData = {
     product_code: string;
@@ -21,15 +22,20 @@ const streampayProductSchema = z.object({
     barcode: z.coerce.string().optional(),
 });
 
+/**
+ * StreamPayProductService: A service layer that handles product-related operations with StreamPay.
+ */
 class StreamPayProductService extends TransactionBaseService {
     protected client: StreamPayClient;
     protected variantRepository: Repository<ProductVariant>;
+    private logger: Logger;
 
     constructor(container: any, options: Record<string, unknown>) {
         super(container);
         const parsedOptions = optionsSchema.parse(options);
         this.variantRepository = this.activeManager_.getRepository(ProductVariant);
         this.client = new StreamPayClient(parsedOptions);
+        this.logger = new Logger('StreamPayProductService');
     }
 
     /**
@@ -41,7 +47,7 @@ class StreamPayProductService extends TransactionBaseService {
         try {
             products = await this.client.getProducts();
         } catch (e) {
-            console.error('Could not fetch products from StreamPay', e);
+            this.logger.error('Could not fetch products from StreamPay', e);
             throw new MedusaError(
                 MedusaError.Types.DB_ERROR,
                 "Could not fetch products from StreamPay",
@@ -54,7 +60,7 @@ class StreamPayProductService extends TransactionBaseService {
         try {
             parsedProducts = productsArraySchema.parse(products);
         } catch (e) {
-            console.error('Could not parse products from StreamPay', e);
+            this.logger.error('Could not parse products from StreamPay', e);
             throw new MedusaError(
                 MedusaError.Types.DB_ERROR,
                 "Could not parse products from StreamPay",
