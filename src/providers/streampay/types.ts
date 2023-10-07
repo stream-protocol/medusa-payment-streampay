@@ -1,10 +1,10 @@
-export interface StreamPaymentRequest {
+export interface StreamPayRequest {
     amount: number;
     currency: string;
     // ... other fields
 }
 
-export interface StreamPaymentResponse {
+export interface StreamPayResponse {
     transactionId: string;
     status: 'pending' | 'completed' | 'failed';
     // ... other fields

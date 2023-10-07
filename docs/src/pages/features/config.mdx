@@ -46,7 +46,7 @@ Replace `YOUR_STREAM_PAYMENTS_API_KEY` with the API key you obtained from the St
 In your Medusa server initialization script, import and initialize the StreamPay (Stream Payment Gateway) plugin:
 
 ```javascript
-const StreamPaymentProvider = require("@stream-payments/medusa-plugin");
+const StreamPayProvider = require("@stream-payments/medusa-plugin");
 
 // ... other imports and initialization code
 
@@ -54,7 +54,7 @@ Medusa.boot({
   // ... other boot options
   paymentProviders: [
     // ... other payment providers
-    new StreamPaymentProvider({
+    new StreamPayProvider({
       apiKey: "YOUR_STREAM_PAYMENTS_API_KEY",
       // other initialization options
     }),

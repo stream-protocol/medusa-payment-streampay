@@ -2,14 +2,14 @@ import { StreamPayClient } from "@streampayments/streampay";
 import { formatCurrency, validatePaymentRequest } from "./utils";
 import { StreamPaymentRequest, StreamPaymentResponse } from "./types";
 
-class StreamPaymentProvider {
+class StreamPayProvider {
     private client: StreamPayClient;
 
     constructor(options: any) {
         this.client = new StreamPayClient(options);
     }
 
-    async createPayment(request: StreamPaymentRequest): Promise<StreamPaymentResponse> {
+    async createPayment(request: StreamPayRequest): Promise<StreamPayResponse> {
         if (!validatePaymentRequest(request)) {
             throw new Error("Invalid payment request");
         }
@@ -25,4 +25,4 @@ class StreamPaymentProvider {
     // ... other methods
 }
 
-export default StreamPaymentProvider;
+export default StreamPayProvider;

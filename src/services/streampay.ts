@@ -8,14 +8,14 @@ import {
   import { Connection, Transaction, SystemProgram } from "@solana/web3.js";
   import { Logger } from "./logger";
   
-  class StreamPaymentProvider implements MedusaProvider {
+  class StreamPayProvider implements MedusaProvider {
     private connection: Connection;
     private logger: Logger;
   
     constructor(options: { network: string; feePercentage?: number }) {
       const rpcUrl = this.getRpcUrl(options.network || "mainnet");
       this.connection = new Connection(rpcUrl);
-      this.logger = new Logger('StreamPaymentProvider');
+      this.logger = new Logger('StreamPayProvider');
     }
   
     private getRpcUrl(network: string): string {
@@ -74,5 +74,5 @@ import {
     // ... (other methods)
   }
   
-  export default StreamPaymentProvider;
+  export default StreamPayProvider;
   

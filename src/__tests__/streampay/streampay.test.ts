@@ -1,11 +1,11 @@
-import StreamPaymentProvider from "../stream-payment";
+import StreamPayProvider from ".";
 
-describe("StreamPaymentProvider", () => {
-    let provider: StreamPaymentProvider;
+describe("StreamPayProvider", () => {
+    let provider: StreamPayProvider;
 
     beforeEach(() => {
         // Initialize the provider before each test
-        provider = new StreamPaymentProvider({ /* options here */ });
+        provider = new StreamPayProvider({ /* options here */ });
     });
 
     describe("createPayment", () => {

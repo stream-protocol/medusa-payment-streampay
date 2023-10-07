@@ -1,12 +1,12 @@
-import { StreamPaymentProvider } from '../providers/stream-payment/stream-payment';
+import { StreamPayProvider } from '../providers/streampay/streampay';
 import { Logger } from '../utils/logger';
 
 class PaymentService {
-    private paymentProvider: StreamPaymentProvider;
+    private paymentProvider: StreamPayProvider;
     private logger: Logger;
 
     constructor() {
-        this.paymentProvider = new StreamPaymentProvider();
+        this.paymentProvider = new StreamPayProvider();
         this.logger = new Logger('PaymentService');
     }
 
