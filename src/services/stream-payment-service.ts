@@ -1,9 +1,3 @@
-# StreamPayments services and Web3 Payments Provider
-
-**Implement the example. business logic for each method**:
-
-
-```typescript
 // /services/stream-payment-service.ts
 import { Lifetime } from "awilix";
 import { TransactionBaseService } from "@medusajs/medusa";
@@ -141,34 +135,3 @@ export default class StreamPaymentService extends TransactionBaseService {
 
   // ... (other methods)
 }
-```
-
-## How it Works ?
-
-The `StreamPaymentService` class is a service that handles the payment process for a Stream Payment system. It extends the `TransactionBaseService` class from Medusa.js and implements various methods related to payment processing.
-
-**Here is a breakdown of how each method works**:
-
-1. `connect`: This method establishes a connection to the Solana blockchain daemon and generates a new wallet if not already connected. The daemon connection is used to interact with the Solana blockchain, and the wallet is used to store the payment funds.
-
-2. `updatePaymentData`: This method updates the payment session data based on the provided data. The updated payment session data is then saved to the database.
-
-3. `createPayment`: This method creates a new payment for the given cart. The payment data includes the cart ID, total amount, and status. The payment data is then saved to the database.
-
-4. `retrievePayment`: This method retrieves payment details based on the provided payment data. The payment details are queried from the database.
-
-5. `updatePayment`: This method updates payment details based on the provided payment session data and cart. The updated payment data is then saved to the database.
-
-6. `authorizePayment`: This method authorizes the payment session based on the provided context. The authorized payment data is then saved to the database, and the status is updated to "authorized".
-
-7. `capturePayment`: This method captures the payment. The captured payment data is then saved to the database, and the status is updated to "captured".
-
-8. `refundPayment`: This method refunds the specified amount for the given payment. The refunded payment data is then saved to the database, and the status is updated to "refunded". An event is also emitted to notify other parts of the system about the refund.
-
-9. `cancelPayment`: This method cancels the payment. The canceled payment data is then saved to the database, and the status is updated to "canceled".
-
-10. `deletePayment`: This method deletes the payment session. The payment session is queried from the database and deleted.
-
-11. `getStatus`: This method gets the status of the payment session based on the provided data. The payment session status is queried from the database.
-
-Overall, the `StreamPaymentService` class provides a comprehensive set of methods for handling the payment process in a Stream Payment Gateway, from creating and updating payments to authorizing, capturing, refunding, and canceling payments.

@@ -1,52 +1,61 @@
-import { SolanaService } from './solana-service'; // Assuming you have a separate service for Solana related operations
-import { Logger } from './logger'; // Assuming you have a logger module
+import { PaymentProcessor } from "medusa-interfaces";
+import { SolanaConnector } from "./utils/solana-connector";
 
-export class StreamPayProcessor {
-    private solanaService: SolanaService;
-    private logger: Logger;
-    private secretKey: string;
+export class StreamPayProcessor extends PaymentProcessor {
 
-    constructor() {
-        // Initialize the Solana service
-        this.solanaService = new SolanaService();
+export class StreamPayProcessor extends PaymentProcessor {
+  private solanaConnector: SolanaConnector;
+  private merchantWallet: string;
 
-        // Initialize the logger
-        this.logger = new Logger('StreamPayProcessor');
+  constructor({ solanaNetwork, merchantWallet }) {
+    super();
+    this.solanaConnector = new SolanaConnector(solanaNetwork);
+    this.merchantWallet = merchantWallet;
+  }
 
-        // Fetch the secret key from a secure environment or configuration management system
-        this.secretKey = process.env.STREAMPAY_SECRET_KEY || '';
-        if (!this.secretKey) {
-            throw new Error('Secret key not provided');
-        }
-    }
+  async getStatus(payment) {
+    // Implement logic to get the status of the payment
+    // For example, you can use the SolanaConnector to query the blockchain
+    // and check if the payment has been confirmed
+    const status = await this.solanaConnector.getPaymentStatus(payment.id);
+    return status;
+  }
 
-    async initiateSolanaPayment(context: PaymentProcessorContext): Promise<PaymentProcessorSessionResponse> {
-        try {
-            // Create a detailed Solana transaction
-            const transaction = await this.solanaService.createTransaction(context);
+  async authorize(payment) {
+    // Implement logic to authorize the payment
+    // For example, you can use the SolanaConnector to create a transaction
+    // on the blockchain and return the transaction id
+    const transactionId = await this.solanaConnector.createTransaction({
+      amount: payment.amount,
+      to: this.merchantWallet,
+    });
+    return transactionId;
+  }
 
-            // Log the transaction creation
-            this.logger.info(`Transaction created with ID: ${transaction.id}`);
+  async capture(payment) {
+    // Implement logic to capture the payment
+    // For example, you can use the SolanaConnector to confirm the transaction
+    // on the blockchain and return the confirmation status
+    const confirmationStatus = await this.solanaConnector.confirmTransaction(payment.transactionId);
+    return confirmationStatus;
+  }
 
-            // ... rest of the method
+  async refund(payment) {
+    // Implement logic to refund the payment
+    // For example, you can use the SolanaConnector to create a refund transaction
+    // on the blockchain and return the transaction id
+    const refundTransactionId = await this.solanaConnector.createRefundTransaction({
+      amount: payment.amount,
+      to: payment.customerWallet,
+    });
+    return refundTransactionId;
+  }
 
-            return {
-                // ... return appropriate response
-            };
-        } catch (error) {
-            this.logger.error(`Failed to initiate Solana payment: ${error.message}`);
-            throw error;
-        }
-    }
-
-    // ... rest of the methods
-
-    private handleError(error: Error): void {
-        // Handle the error, possibly sending it to an error tracking system
-        this.logger.error(error.message);
-        // Additional error handling logic here
-    }
+  async cancel(payment) {
+    // Implement logic to cancel the payment
+    // For example, you can use the SolanaConnector to cancel the transaction
+    // on the blockchain and return the cancellation status
+    const cancellationStatus = await this.solanaConnector.cancelTransaction(payment.transactionId);
+    return cancellationStatus;
+  }
 }
-
-// Usage
-const processor = new StreamPayProcessor();

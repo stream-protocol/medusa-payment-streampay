@@ -1,89 +1,48 @@
-# StreamPay Web3 JavaScript Template
+# ToDo List for StreamPay Plugin with Solana Integration
 
-Building a payment system like StreamPay that integrates with Solana web3.js for e-commerce platforms, particularly in the context of the Medusa e-commerce architecture, is a challenging but rewarding endeavor. The outline you provided is a good starting point for developers. Here are some additional details and considerations:
+## Overview
 
-## Table of Contents
+This document outlines the tasks and steps required to develop and integrate the StreamPay plugin with Solana blockchain for Medusa.
 
-- [StreamPay Web3 JavaScript Template](#streampay-web3-javascript-template)
-  - [Table of Contents](#table-of-contents)
-  - [Architecture](#architecture)
-  - [streampay-javascript Package](#streampay-javascript-package)
-  - [API and Model Overview with Visual Diagrams](#api-and-model-overview-with-visual-diagrams)
-  - [Documentation](#documentation)
-  - [Medusa Implementation](#medusa-implementation)
-  - [Solana Web3.js Integration](#solana-web3js-integration)
-  - [Sample Code](#sample-code)
-  - [Medusa Plugin Documentation](#medusa-plugin-documentation)
-  - [Scalability and Security](#scalability-and-security)
-  - [TODO List](#todo-list)
-    - [StreamPay Plugin Documentation](#streampay-plugin-documentation)
-    - [Medusa Plugin Documentation](#medusa-plugin-documentation-1)
+## ToDo List
 
-## Architecture
+1. **Setup Development Environment**
+    - [x] Install necessary tools and libraries.
+    - [x] Setup Medusa development environment.
+    - [ ] Setup Solana blockchain
+    - [ ] Create StreamPay solana smart contracts (programs)
 
-- Define the overall architecture of StreamPay within the context of Medusa. Consider how it fits into the existing architecture and how data flows between components.
+2. **Plugin Structure and Files**
+    - [x] Create the folder structure for the plugin.
+    - [x] Add necessary files such as `index.ts`, `streampay-processor.ts`, and `solana-connector.ts`.
+    - [ ] StreamPOS - Implement Point of Sale System.
+    - [ ] Create the fee structure for the plugin
 
-## streampay-javascript Package
+3. **Implement Solana Connector**
+    - [x] Implement the basic logic for connecting to the Solana blockchain in `solana-connector.ts`.
+    - [x] Add functions for sending transactions and handling errors.
 
-- Develop a JavaScript package (`"streampay-javascript": "^0.1.0",`) that encapsulates the core functionality of StreamPay.
-- Ensure that the package is well-documented, versioned, and follows best practices for code organization.
+4. **Implement StreamPay Processor**
+    - [x] Implement the basic logic for processing payments with StreamPay in `streampay-processor.ts`.
+    - [ ] Add functions for initiating payments, updating payment data, and authorizing payments.
+    - [ ] StreamPOS payment features
 
-## API and Model Overview with Visual Diagrams
+5. **Integration with Medusa**
+    - [ ] Add the StreamPay plugin to the Medusa setup.
+    - [ ] Configure the StreamPay plugin with necessary parameters such as `secret_key`, `solana_network`, and `merchant_wallet`.
 
-- Create a clear API documentation that outlines the methods and parameters provided by the `streampay-javascript` package.
-- Use visual diagrams to illustrate the data flow and interactions between different components of StreamPay and Medusa.
+6. **Testing**
+    - [ ] Test the payment flow in a staging environment.
+    - [ ] Ensure that payments are processed correctly and that the Solana transactions are successful.
 
-## Documentation
+7. **Documentation**
+    - [ ] Update the `README.md` file with installation and configuration instructions.
+    - [ ] Add documentation for any additional features or options provided by the plugin.
 
-- Provide comprehensive documentation for developers who want to integrate StreamPay into their Medusa-powered e-commerce platform.
-- Include usage examples, code snippets, and troubleshooting guides.
+8. **Publishing**
+    - [ ] Publish the plugin to npm or another package manager.
+    - [ ] Share the plugin with the Medusa community.
 
-## Medusa Implementation
+## Notes
 
-- Integrate StreamPay into the Medusa architecture as a payment processing module.
-- Ensure that it seamlessly interacts with other Medusa components such as the cart, checkout, and order management.
-
-## Solana Web3.js Integration
-
-- Continue to use and integrate Solana's web3.js library for blockchain interactions.
-- Stay updated with changes in the Solana ecosystem and maintain compatibility with the latest Solana versions.
-- USDC and EURC payment features
-
-## Sample Code
-
-- Provide sample code snippets to help developers get started quickly with integrating StreamPay into their Medusa e-commerce platform.
-
-## Medusa Plugin Documentation
-
-- Refer to Medusa's documentation for plugin development guidelines and ensure that StreamPay is well-integrated as a Medusa plugin.
-- Include any specific instructions or configurations required for Medusa integration.
-
-## Scalability and Security
-
-- Implement scalability measures to handle varying traffic loads on Medusa-powered e-commerce platforms.
-- Continuously update security measures to protect user data and funds.
-
-Remember that building and maintaining a payment system like StreamPay Web3 JavaScript requires ongoing dedication and collaboration with the Medusa community, as well as keeping an eye on changes in the Solana blockchain ecosystem. Regularly updating documentation and providing support to users and merchants will be crucial for the success and adoption of StreamPayments system.
-
-## TODO List
-
-Here is a list of tasks and features that need to be completed for Stream**Pay** Web3.js JavaScript:
-
-- [x] Task 1: [Architecture]
-- [x] Task 2: [Documentation]
-- [x] Task 3: [Features]
-- [ ] Task 4: [Solana]
-- [ ] Task 5: [Merchant-Portal-Dev]
-- [ ] Task 6: Develop. [streampay-javascript]
-- [ ] Task 7: Plugin testing and fix
-- [ ] Task 8: Improvements
-
-Feel free to contribute by picking up any task from the list above or adding new tasks as needed. Please make sure to follow our [contributing guidelines](CONTRIBUTING.md) when submitting your changes.
-
-### StreamPay Plugin Documentation
-
-For detailed information about StreamPay's integration with Medusa, please refer to the [StreamPay Payment Plugin Documentation](https://docs.streampayments.org/plugins/medusa/payment). (Under Maintenance)
-
-### Medusa Plugin Documentation
-
-https://docs.medusajs.com/plugins/payment
+- Adding additional features or options to enhance the functionality of the StreamPay plugin.

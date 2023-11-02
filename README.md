@@ -1,8 +1,8 @@
-## Medusa Payment Plugin: StreamPay with Solana Integration
+# Medusa Payment Plugin: StreamPay with Solana Integration
 
 ### Overview
 
-This plugin integrates StreamPay with Solana blockchain capabilities as a payment method for Medusa. It allows merchants to accept payments using StreamPay while leveraging the speed, security, and scalability of the Solana blockchain.
+The Medusa web3 payments plugin integrates StreamPay with Solana blockchain capabilities as a payment method for Medusa. It allows merchants to accept payments using StreamPay while leveraging the speed, security, and scalability of the Solana blockchain.
 
 The Medusa StreamPay plugin offers a seamless integration of StreamPay with the benefits of the Solana blockchain. Ensure to test the payment flow in a staging environment before deploying to production. This integration provides a modern, fast, and secure payment method suitable for the evolving e-commerce landscape.
 
@@ -16,11 +16,11 @@ The Medusa StreamPay plugin offers a seamless integration of StreamPay with the 
 - **Security**: Enhanced security with Solana's unique proof-of-history and proof-of-stake consensus mechanisms.
 - **Private Key Management**: Secure methods to handle and rotate private keys, ensuring utmost security.
 
-### Prequisites
+### Prerequisites
 
 - **Medusa Backend**: Ensure you have a running instance of the Medusa backend.
 - **StreamPayments Account**: Sign up for an account or log in to your existing StreamPayments™ dashboard.
-- **Solana Account/Wallet Address**: Create a Solana account and have your wallet address ready. Consider using wallets like Phantom, MetaMask or TrustWallet for enhanced security and ease of use.
+- **Solana Account/Wallet Address**: Create a Solana account and have your wallet address ready. Consider using wallets like Phantom, MetaMask, or TrustWallet for enhanced security and ease of use.
 
 ### Installation
 
@@ -45,7 +45,7 @@ Medusa.plugins.register({
 
 To configure the StreamPay plugin, you need to provide:
 
-- `secret_key`: Your StreamPay Secret Key. Obtainable from the StreamPayments dashboard.
+- `secret_key`: Your StreamPay Secret Key, obtainable from the StreamPayments dashboard.
 - `solana_network`: The Solana network you want to use (`devnet`, `testnet`, or `mainnet-beta`).
 - `debug`: (Optional) If set to `true`, the plugin will log debug information.
 
@@ -55,18 +55,26 @@ Example:
 Medusa.plugins.configure("streampay", {
   secret_key: "YOUR_STREAMPAY_SECRET_KEY",
   solana_network: "mainnet",
+  merchant_wallet: "YOUR_MERCHANT_WALLET_ADDRESS",
+  fee_wallet: "YOUR_FEE_WALLET_ADDRESS",
   debug: true,
 });
 ```
+#### Environmential
+
+```.env
+SOLANA_NETWORK=https://api.devnet.solana.com
+MERCHANT_WALLET_ADDRESS=HcnV8JFTopBi3dXUtKv7YMTQ6sGE8hy34qnCpAyH6Hcd
+FEE_WALLET=
 
 ### Usage
 
-Once installed and configured, the StreamPay payment method will be available during checkout. The plugin handles:
+Once installed and configured, the StreamPay payment method will be available during checkout. The StreamPay plugin handles:
 
 - Initiating the payment with StreamPay and creating a Solana transaction.
 - Updating payment data on cart changes.
 - Authorizing the payment on cart completion using Solana's fast transaction confirmation.
-- And more...
+- SOLANA_
 
 ### Methods
 
@@ -85,3 +93,10 @@ The plugin provides comprehensive error handling for both StreamPay and Solana-r
 - **Never hardcode or expose private keys**. Use secure vaults or key management services.
 - Implement mechanisms to rotate keys if necessary.
 - Ensure Solana transactions are signed securely, possibly using frontend wallets like Phantom or TrustWallet.
+
+## ToDo
+
+- Implement Solana Programs
+- Blockchain
+- Test Programs and account
+- Implement Medusa Plugin StreamPay
