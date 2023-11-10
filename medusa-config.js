@@ -52,16 +52,6 @@ const plugins = [
       },
     },
   },
- // Add the StreamPay plugin with Solana Blockchain, merchant wallet, and fee wallet options
- {
-  resolve: `medusa-plugin-streampay`,
-  options: {
-    merchantWallet: process.env.MERCHANT_WALLET_ADDRESS,
-    feeWallet: process.env.FEE_WALLET_ADDRESS,
-    solana_network: "mainnet",
-    enableUI: true,
-  },
-},
 ];
 
 const modules = {

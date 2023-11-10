@@ -1,174 +1,38 @@
-# StreamPayments services and Web3 Payments Provider
+To implement the `StreamPay` class methods with specific logic for handling SPL tokens, escrow transactions, subscription payments, and payment streams, we need to tailor each method to interact with the Solana blockchain and Medusa backend according to the specific requirements of each payment type. Here's an overview of how these methods can be implemented:
 
-**Implement the example. business logic for each method**:
+1. **initiatePayment**: Starts a new payment session using SPL tokens.
+   - This method will create a new payment session on the Solana blockchain using SPL tokens. It might involve creating a transaction with the SPL token and sending it to the escrow program.
 
+2. **retrievePayment**: Retrieves details of an existing payment session.
+   - This method will interact with the Solana blockchain to retrieve the current state of a payment session, such as checking the status of a transaction in the escrow program.
 
-```typescript
-// /services/stream-payment-service.ts
-import { Lifetime } from "awilix";
-import { TransactionBaseService } from "@medusajs/medusa";
-import { IEventBusService } from "@medusajs/types";
-import { EntityManager } from "typeorm";
-import { Connection, Keypair } from "@solana/web3.js";
-import { StreamPaymentRepository } from "../repositories/stream-payment-repository";
-import { Data, Cart, PaymentSession, Payment, PaymentSessionStatus } from "@medusajs/medusa";
-import { Logger } from "winston";
+3. **getPaymentStatus**: Checks the current status of a payment session.
+   - This method will query the Solana blockchain or the escrow program to determine the current status of a payment session, such as whether it is pending, completed, or failed.
 
-export default class StreamPaymentService extends TransactionBaseService {
-  static LIFE_TIME = Lifetime.SCOPED;
-  protected readonly eventBusService_: IEventBusService;
-  protected readonly manager_: EntityManager;
-  protected readonly transactionManager_: EntityManager;
-  protected readonly logger_: Logger;
+4. **updatePayment**: Updates an existing payment session.
+   - This method will handle updates to a payment session, such as changes in the amount due to cart updates. It might involve interacting with the escrow program to adjust the terms of the transaction.
 
-  private readonly streamPaymentRepository: StreamPaymentRepository;
-  private readonly daemonProviderUrl: string;
-  private readonly merchantPaymentAddress: string;
+5. **deletePayment**: Deletes or cancels a payment session.
+   - This method will cancel a payment session, which might involve sending a cancellation transaction to the Solana blockchain or interacting with the escrow program to release funds.
 
-  private daemon: Connection | null = null;
-  private wallet: Keypair | null = null;
+6. **authorizePayment**: Authorizes the payment amount of the cart.
+   - This method will authorize a payment amount, potentially by creating a hold transaction in the escrow program on the Solana blockchain.
 
-  constructor(
-    {
-      eventBusService,
-      manager,
-      transactionManager,
-      streamPaymentRepository,
-      logger,
-    }: {
-      eventBusService: IEventBusService;
-      manager: EntityManager;
-      transactionManager: EntityManager;
-      streamPaymentRepository: StreamPaymentRepository;
-      logger: Logger;
-    },
-    options: {
-      daemonProviderUrl: string;
-      merchantPaymentAddress: string;
-    }
-  ) {
-    super({
-      eventBusService,
-      manager,
-      transactionManager,
-      streamPaymentRepository,
-    }, options);  
+7. **capturePayment**: Captures the payment amount of an order.
+   - This method will capture the authorized payment, which might involve finalizing a transaction in the escrow program.
 
-    this.eventBusService_ = eventBusService;
-    this.manager_ = manager;
-    this.transactionManager_ = transactionManager;
-    this.streamPaymentRepository = streamPaymentRepository;
-    this.daemonProviderUrl = options.daemonProviderUrl;
-    this.merchantPaymentAddress = options.merchantPaymentAddress;
-    this.logger_ = logger;
-  }
+8. **refundPayment**: Handles the refund process.
+   - This method will process refunds, potentially by creating a refund transaction on the Solana blockchain.
 
-  private async connect() {
-    if (this.daemon === null) {
-      this.daemon = new Connection(this.daemonProviderUrl);
-    }
-  
-    if (this.wallet === null) {
-      this.wallet = Keypair.generate();
-    }
-  }
+9. **cancelPayment**: Cancels a payment.
+   - This method will cancel a payment, which might involve interacting with the escrow program to reverse a transaction.
 
-  // ... (other methods)
+10. **Utility methods**: Handle specific logic for SPL tokens, escrow transactions, subscription payments, and payment streams.
+    - `handleSPLTokenPayment`: Handles the specifics of making a payment with SPL tokens.
+    - `handleEscrowTransaction`: Manages the intricacies of escrow transactions on the Solana blockchain.
+    - `handleSubscriptionPayment`: Deals with recurring payments or subscriptions.
+    - `handlePaymentStream`: Manages continuous payment streams, potentially involving smart contracts for ongoing transactions.
 
-  async updatePaymentData(paymentSessionData: Data, data: Data): Promise<Data> {
-    await this.connect();
+Each of these methods should be implemented with the specific logic required for your application, considering the Solana blockchain's capabilities and the Medusa backend's requirements. The implementation will depend on the details of the Solana blockchain interaction, the structure of the escrow program, and the specifics of SPL token handling.
 
-    // Update payment session data based on the provided data
-    const updatedPaymentSessionData = {
-      ...paymentSessionData,
-      ...data,
-    };
-
-    try {
-      // Save the updated payment session data to the database
-      // ...
-      this.logger_.info("Payment session data updated successfully");
-    } catch (error) {
-      this.logger_.error("Failed to update payment session data", error);
-      throw new Error("Failed to update payment session data");
-    }
-
-    return updatedPaymentSessionData;
-  }
-
-  async createPayment(cart: Cart): Promise<Data> {
-    await this.connect();
-
-    // Create a new payment for the given cart
-    const paymentData = {
-      cartId: cart.id,
-      totalAmount: cart.total,
-      status: 'pending',
-      // ... (other payment data)
-    };
-
-    try {
-      // Save the payment data to the database
-      // ...
-      this.logger_.info("Payment created successfully");
-    } catch (error) {
-      this.logger_.error("Failed to create payment", error);
-      throw new Error("Failed to create payment");
-    }
-
-    return paymentData;
-  }
-
-  async retrievePayment(paymentData: Data): Promise<Data> {
-    await this.connect();
-
-    // Retrieve payment details based on the provided payment data
-    const paymentDetails = {
-      // ... (payment details)
-    };
-
-    try {
-      // Query the database to retrieve the payment details
-      // ...
-      this.logger_.info("Payment details retrieved successfully");
-    } catch (error) {
-      this.logger_.error("Failed to retrieve payment details", error);
-      throw new Error("Failed to retrieve payment details");
-    }
-
-    return paymentDetails;
-  }
-
-  // ... (other methods)
-}
-```
-
-## How it Works ?
-
-The `StreamPaymentService` class is a service that handles the payment process for a Stream Payment system. It extends the `TransactionBaseService` class from Medusa.js and implements various methods related to payment processing.
-
-**Here is a breakdown of how each method works**:
-
-1. `connect`: This method establishes a connection to the Solana blockchain daemon and generates a new wallet if not already connected. The daemon connection is used to interact with the Solana blockchain, and the wallet is used to store the payment funds.
-
-2. `updatePaymentData`: This method updates the payment session data based on the provided data. The updated payment session data is then saved to the database.
-
-3. `createPayment`: This method creates a new payment for the given cart. The payment data includes the cart ID, total amount, and status. The payment data is then saved to the database.
-
-4. `retrievePayment`: This method retrieves payment details based on the provided payment data. The payment details are queried from the database.
-
-5. `updatePayment`: This method updates payment details based on the provided payment session data and cart. The updated payment data is then saved to the database.
-
-6. `authorizePayment`: This method authorizes the payment session based on the provided context. The authorized payment data is then saved to the database, and the status is updated to "authorized".
-
-7. `capturePayment`: This method captures the payment. The captured payment data is then saved to the database, and the status is updated to "captured".
-
-8. `refundPayment`: This method refunds the specified amount for the given payment. The refunded payment data is then saved to the database, and the status is updated to "refunded". An event is also emitted to notify other parts of the system about the refund.
-
-9. `cancelPayment`: This method cancels the payment. The canceled payment data is then saved to the database, and the status is updated to "canceled".
-
-10. `deletePayment`: This method deletes the payment session. The payment session is queried from the database and deleted.
-
-11. `getStatus`: This method gets the status of the payment session based on the provided data. The payment session status is queried from the database.
-
-Overall, the `StreamPaymentService` class provides a comprehensive set of methods for handling the payment process in a Stream Payment Gateway, from creating and updating payments to authorizing, capturing, refunding, and canceling payments.
+Error handling, transaction validation, and security considerations are crucial in these implementations to ensure a robust and reliable payment processing system.
