@@ -26,7 +26,7 @@
     "prepare": "cross-env NODE_ENV=production npm run build:server && medusa-admin bundle"
   },
   "peerDependencies": {
-    "@medusajs/medusa": "1.17.3",
+    "@medusajs/medusa": "1.18.1",
     "@types/node": "20.8.10",
     "@solana/web3.js": "1.87.3",
     "@solana/spl-token": "0.3.8",
@@ -44,13 +44,13 @@
     "typeorm": "^0.3.17"
   },
   "dependencies": {
-    "@medusajs/admin": "7.1.6",
+    "@medusajs/admin": "7.1.8",
     "@medusajs/cache-inmemory": "^1.8.9",
     "@medusajs/cache-redis": "^1.8.9",
     "@medusajs/event-bus-local": "^1.9.7",
     "@medusajs/event-bus-redis": "^1.8.10",
     "@medusajs/file-local": "^1.0.2",
-    "@medusajs/medusa": "1.17.3",
+    "@medusajs/medusa": "1.18.1",
     "@tanstack/react-query": "4.22.0",
     "babel-preset-medusa-package": "^1.1.19",
     "body-parser": "^1.19.0",
